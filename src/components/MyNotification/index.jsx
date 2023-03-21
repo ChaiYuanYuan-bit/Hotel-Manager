@@ -3,7 +3,7 @@ import {notification} from 'antd'
 
 const MyNotification = ({noteMsg}) => {
     const {type,description} = noteMsg
-    console.log({type,description})
+    // console.log({type,description})
     const [api, contextHolder] = notification.useNotification();
     useEffect(()=>{
         //如果type有值，打开通知框
@@ -11,7 +11,6 @@ const MyNotification = ({noteMsg}) => {
         api[type]({
             message:'系统提示',
             description,
-            duration: 1,
             });
         }
     },[noteMsg])

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import {useNavigate} from 'react-router-dom'
 import { Button, Form, Input } from "antd";
 import MyNotification from '../../components/MyNotification'
@@ -13,6 +13,13 @@ const Login = () => {
     //导航
     let navigate = useNavigate()
 
+    //判断是否已登录
+    useEffect(()=>{
+        if(sessionStorage.getItem('token')){
+            navigate('/layout')
+        }
+    },[])
+    
     //表单成功提交方法
     const onFinish = async (values) => {
        const {message,success} = await $login(values)
@@ -90,7 +97,6 @@ const Login = () => {
                 </Form.Item>
                 </Form>
             </div>
-            {/* {contextHolder} */}
             <MyNotification noteMsg = {noteMsg}/>
         </div>
     );
