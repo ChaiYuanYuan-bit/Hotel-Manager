@@ -98,6 +98,7 @@ const Login = () => {
                 </Form>
             </div>
             <MyNotification noteMsg = {noteMsg}/>
+            
         </div>
     );
 };

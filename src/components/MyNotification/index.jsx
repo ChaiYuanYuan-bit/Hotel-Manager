@@ -11,6 +11,7 @@ const MyNotification = ({noteMsg}) => {
         api[type]({
             message:'系统提示',
             description,
+            duration:1
             });
         }
     },[noteMsg])
