@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/服务器/DataBase/node_modules
+/服务器/Server/node_modules
 /.pnp
 .pnp.js
 
