@@ -1,4 +1,4 @@
-import React,{Fragment,useEffect,useState} from 'react';
+import React,{Fragment,useEffect,useState,ConfigProvider } from 'react';
 import {Table,Button,Space,Popconfirm,message } from 'antd'
 import AddRole from './AddRole/AddRole';
 import MyNotification from '../../components/MyNotification';
@@ -12,12 +12,15 @@ const Role = () => {
     let [noteMsg,setNoteMsg] = useState({type:'',description:''})
 
     //抽屉状态
-    const [open, setOpen] = useState(false);
+    let [open, setOpen] = useState(false);
+
+    //编辑状态所选id
+    let [roleId,setRoleId] = useState(-1)
 
     //打开右边抽屉
     const showDrawer = () => {
-        setOpen(true);
-        };
+        setOpen(true)//打开抽屉
+        }
 
     //初始化加载状态
     useEffect(()=>{
@@ -35,6 +38,7 @@ const Role = () => {
             setNoteMsg({type:'error',description:'网络错误'})
         }
     }
+
     //删除角色
     const del = async (id) => {
         try{
@@ -53,6 +57,12 @@ const Role = () => {
             setNoteMsg({type:'error',description:'网络错误'})
         }
     }
+
+    //编辑角色
+    const handleEdit =(id) => {
+        setRoleId(id)//设置为编辑状态
+        setOpen(true)
+    }
     
     //表格列信息
     const columns = [
@@ -60,17 +70,20 @@ const Role = () => {
             title: '角色编号',
             dataIndex: 'id',
             key: 'id',
+            align:'center'
         },
         {
             title: '角色名称',
             dataIndex: 'roleName',
             key: 'roleName',
+            align:'center'
         },
         {
             title: '操作',
             key: 'action',
             render: (ret) => (
                 <>
+                    <Button onClick={()=>{handleEdit(ret.id)}} style={{marginRight:'20px'}}  size="middle">编辑</Button>
                     <Popconfirm
                     title="提示"
                     description="确定删除么?"
@@ -78,14 +91,13 @@ const Role = () => {
                     okText="确定"
                     cancelText="取消"
                     >
-                        <Space size="middle">
-                            <a>删除</a>
-                        </Space>
+                        <Button danger size="middle">删除</Button>
                     </Popconfirm>
                     
                 </>
               
             ),
+            align:'center'
           },
         ];
     return (
@@ -93,8 +105,8 @@ const Role = () => {
             <div className='search'>
                 <Button onClick={showDrawer}>添加</Button>
             </div>
-            <Table columns={columns} dataSource={roleList} />
-            <AddRole open={open} setOpen={setOpen} loadList={loadList}/>
+            <Table  columns={columns} dataSource={roleList} />
+            <AddRole open={open} setOpen={setOpen} loadList={loadList} roleId={roleId} setRoleId={setRoleId}/>
             <MyNotification noteMsg = {noteMsg}/>
         </Fragment>
     );
