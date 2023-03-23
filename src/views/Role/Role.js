@@ -1,5 +1,5 @@
 import React,{Fragment,useEffect,useState,ConfigProvider } from 'react';
-import {Table,Button,Space,Popconfirm,message } from 'antd'
+import {Table,Button,Popconfirm } from 'antd'
 import AddRole from './AddRole/AddRole';
 import MyNotification from '../../components/MyNotification';
 import {$list,$del} from '../../api/roleApi'

@@ -1,7 +1,7 @@
 import Login from "../views/Login/Login";
 import Layout from "../views/Layout/Layout";
 import Role from "../views/Role/Role";
-import { Children } from "react";
+import Admin from "../views/Admin/Admin";
 
 export default [
 	{
@@ -11,7 +11,11 @@ export default [
             {
                 path:'role',
 		        element:<Role/>,
-            }
+            },
+			{
+				path:'admin',
+				element:<Admin/>,
+			}
         ]
 	},
 	{

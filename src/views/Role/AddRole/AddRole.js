@@ -15,7 +15,7 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
     const onClose = () => {
         setOpen(false)  //关闭抽屉
         setRoleId(-1)   //取消编辑状态
-        form.setFieldsValue({roleName:''})  //清空表单
+        clear()  //清空表单
     };
     //编辑状态
     useEffect(()=>{
@@ -37,7 +37,7 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
                     loadList()
                     setOpen(false)
                     setRoleId(-1)   //取消编辑状态
-                    form.resetFields()
+                    clear()
                 }
                 else{
                     setNoteMsg({type:'error',description:message})
@@ -46,14 +46,14 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
                 }
             }
             else{
-                //太你家角色
+                //添加角色
                 let {success,message,_} = await $add(values)
                 if(success)
                 {
                     setNoteMsg({type:'success',description:message})
                     loadList()
                     setOpen(false)
-                    form.resetFields()
+                    clear()
                 }
                 else{
                     setNoteMsg({type:'error',description:message})
@@ -66,6 +66,10 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
             setNoteMsg({type:'error',description:'网络错误'})
             setOpen(false)
         }
+    }
+
+    const clear = ()=>{
+        form.resetFields()
     }
 
     return (
@@ -100,7 +104,7 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
                 rules={[
                     {
                     required: true,
-                    message: 'Please input your username!',
+                    message: '请填写角色名称!',
                     },
                 ]}
                 >

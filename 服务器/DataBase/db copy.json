@@ -26,37 +26,30 @@
       {
         "id": 1,
         "loginId": "admin",
-        "name": "柴园园",
+        "name": "柴园园",      
         "phone": "15216757930",
         "photo": "admin.jpg",
-        "roleId": 1
+        "roleId": 1  
       },
       {
         "id": 2,
         "loginId": "joker",
-        "name": "萨科",
+        "name": "萨科",  
         "phone": 15316345481,
         "photo": "萨科.jpg",
-        "roleId": 2
+        "roleId": 2  
       },
       {
         "id": 3,
         "loginId": "pike",
-        "name": "派克",
+        "name": "派克",      
         "phone": "13834112106",
         "photo": "派克.jpg",
-        "roleId": "3"
-      },
-      {
-        "id": 4,
-        "loginId": "MaMi",
-        "name": "Mq",
-        "phone": "123132113",
-        "photo": "infinity-376695.jpg",
-        "roleId": 5
+        "roleId": "3"   
       }
     ],
-    "pageIndex": 1,
-    "pageSize": 10
+    "pageIndex": 1,      
+    "pageSize": 10       
+  }
   }
 }

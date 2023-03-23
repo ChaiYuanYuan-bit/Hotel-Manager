@@ -66,7 +66,7 @@ const  siderItems=[
                 label:'角色管理'
             },
             {
-                key:'user',
+                key:'admin',
                 label:'用户管理'
             }
         ]
@@ -116,8 +116,13 @@ export default function(){
     //侧边栏菜单点击事件
     const handleSider = (e)=>{
         switch(e.key){
+            //角色管理
             case 'role':
                 navigate('/layout/role')
+                break;
+            //用户管理
+            case 'admin':
+                navigate('/layout/admin')
                 break;
         }
     }

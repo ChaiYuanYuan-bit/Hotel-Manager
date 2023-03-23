@@ -5,17 +5,13 @@ const jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 let key = "fuTkisMQQ2j1ESC0cbaQen1ZWmkMdvLx"
 let expir = 60 * 30 //30min(token过期的时间)
-const { json } = require('body-parser')
 
 const user  = 'admin'
 const pwd = 'c8837b23ff8aaa8a2dde915473ce0991'
 
 /*
-  请求地址： http://localhost:3000/search/users?q=aa
+ URL:
 
-  后台路由
-    key： /search/users
-    value： function () {}
 */
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -34,8 +30,18 @@ app.get("/Admin/Login", function (req, res) {
   res.json({message:'用户名不存在',success:false})
 });
 
-//查询列表
+//查询账户列表
+app.get("/Admin/List", function (req, res) {
+  console.log('get /Admin/List:')
+  axios.get('http://localhost:3004/admin',{params:req.query}).then(response => {
+    console.log('response', response.data)
+    res.json({count:response.data.data.length,...response.data})
+  })
+});
+
+//查询角色列表
 app.get("/Role/List", function (req, res) {
+  console.log('get /Role/List:')
   axios.get('http://localhost:3004/list',{params:req.query}).then(response => {
     console.log('response', response.data)
     if(response.data.length===1){
@@ -47,7 +53,38 @@ app.get("/Role/List", function (req, res) {
   })
 });
 
-//增加元素
+//查询单个账户
+app.get("/Admin/GetOne", function (req, res) {
+  console.log('get /Admin/GetOne:')
+  axios.get('http://localhost:3004/admin').then(response => {
+    response.data.data.map((item)=>{
+      if(item.loginId===req.query.loginId){
+        res.json({...item})
+      }
+    })
+  })
+});
+
+//访问图片
+app.get("/Admin/UpLoad", function (req, res) {
+  res.sendFile('./public/test.jpg');
+});
+
+//查询角色列表
+app.get("/Role/List", function (req, res) {
+  console.log('get /Role/List:')
+  axios.get('http://localhost:3004/list',{params:req.query}).then(response => {
+    console.log('response', response.data)
+    if(response.data.length===1){
+      res.json(...response.data)
+    }
+    else{
+      res.json(response.data)
+    }
+  })
+});
+
+//增加角色
 app.post("/Role/Add", function (req, res) {
   console.log('post /Role/Add:')
   var pre_data = []
@@ -75,7 +112,67 @@ app.post("/Role/Add", function (req, res) {
   .catch((error)=>{console.log('error', error)})
 });
 
-//修改元素
+//增加账户
+app.post("/Admin/Add", function (req, res) {
+  console.log('post /Admin/Add:')
+  axios.get('http://localhost:3004/admin').then(response => 
+  {
+    preData = response.data
+    let isRepeat = false
+    preData.data.map((item)=>{
+      if (item.loginId === req.body.loginId){
+        isRepeat=true
+      } 
+    })
+    if(isRepeat)
+    {
+      res.json({success:false,message:'账户已存在，请更换账户'})
+    }
+    else
+    {
+      let count = preData.data.length
+      newData = {...preData,data:[...preData.data,{id:count+1,...req.body}]}
+      axios.post('http://localhost:3004/admin',newData)
+      .then(response => 
+        {
+            res.json({success:true,message:'添加成功'}) 
+        })
+      .catch(error=>res.json({success:false,message:'添加失败'}))
+    }
+  })
+  .catch(error=>console.log('error', error))
+  }
+);
+
+//上传头像
+app.post("/Admin/UploadImg", function (req, res) {
+  console.log('post /Admin/UploadImg:')
+  res.json({...req.body,success:true,massage:"上传成功"})}
+);
+
+//修改账户
+app.put("/Admin/Update", function (req, res) {
+  console.log('put /Admin/Update:')
+  var pre_data = []
+  var next_data=req.body
+  axios.get('http://localhost:3004/admin').then(response => {
+    pre_data =  response.data
+  }).then(()=>{
+      pre_data.data = pre_data.data.map((item)=>{
+        if (item.loginId === next_data.loginId)
+          return {...next_data,id:item.id}
+        else
+          return item
+      })
+        axios.put(`http://localhost:3004/admin`,pre_data)
+        .then(response => {
+          res.json({success:true,message:'修改成功'}) 
+    }).catch(error=>res.json({success:false,message:'修改失败'}))
+  })
+  .catch((error)=>{console.log('error', error)})
+});
+
+//修改角色
 app.put("/Role/List", function (req, res) {
   console.log('put /Role/List:')
   console.log('req.body', req.body)
@@ -108,7 +205,7 @@ app.put("/Role/List", function (req, res) {
   }
 });
 
-//删除元素
+//删除角色
 app.delete("/Role/Delete", function (req, res) {
   console.log('delete /Role/Delete:')
   if(req.query.id==='1'){
@@ -120,6 +217,34 @@ app.delete("/Role/Delete", function (req, res) {
     ).catch(()=>{
       res.json({success:false,message:'删除失败'})
     })
+  }
+});
+
+//删除账户
+app.delete("/Admin/Delete", function (req, res) {
+  console.log('delete /Admin/Delete:')
+  if(req.query.id==='1'){
+      res.json({success:false,message:'初始角色不可删除'})
+  }
+  else{
+    var pre_data = []
+    var next_data=req.query
+    axios.get('http://localhost:3004/admin').then(response => {
+      pre_data =  response.data
+    }).then(()=>{
+      pre_data.data = pre_data.data.filter((item)=>{
+          console.log(typeof(item.id), typeof(next_data.id))
+          if (item.id===Number(next_data.id))
+            return false
+          else
+            return true
+        })
+          axios.put(`http://localhost:3004/admin`,pre_data)
+          .then(response => {
+            res.json({success:true,message:'删除成功'}) 
+      }).catch(error=>res.json({success:false,message:'删除失败'}))
+    })
+    .catch((error)=>{console.log('error', error)})
   }
 });
 
