@@ -1,7 +1,7 @@
 import axiosInstance from '../utils/request'
 
 //角色列表
-export const $list = async ()=>{
+export const $roleList = async ()=>{
     let {data} = await axiosInstance.get('Role/List')
     return data
 }

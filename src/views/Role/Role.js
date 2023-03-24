@@ -2,7 +2,7 @@ import React,{Fragment,useEffect,useState,ConfigProvider } from 'react';
 import {Table,Button,Popconfirm } from 'antd'
 import AddRole from './AddRole/AddRole';
 import MyNotification from '../../components/MyNotification';
-import {$list,$del} from '../../api/roleApi'
+import {$roleList,$del} from '../../api/roleApi'
 
 const Role = () => {
     //角色列表
@@ -30,7 +30,7 @@ const Role = () => {
     //获取列表
     const loadList = async ()=>{
         try{
-            let data = await $list()
+            let data = await $roleList()
             data = data.map(r=>({...r,key:r.id}))
             setRoleList(data)
         }

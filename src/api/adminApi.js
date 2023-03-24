@@ -13,8 +13,8 @@ export const $login = async (params)=>{
 }
 
 //账户列表
-export const $list = async ()=>{
-    let {data} = await axiosInstance.get('Admin/List')
+export const $accountList = async (params)=>{
+    let {data} = await axiosInstance.get('Admin/List',{params})
     return data
 }
 

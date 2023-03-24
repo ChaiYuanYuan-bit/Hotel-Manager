@@ -30,12 +30,47 @@ app.get("/Admin/Login", function (req, res) {
   res.json({message:'用户名不存在',success:false})
 });
 
-//查询账户列表
+//查询账户列表 
 app.get("/Admin/List", function (req, res) {
   console.log('get /Admin/List:')
-  axios.get('http://localhost:3004/admin',{params:req.query}).then(response => {
-    console.log('response', response.data)
-    res.json({count:response.data.data.length,...response.data})
+  console.log('req.query', req.query)
+  let roleId = Number(req.query.roleId)
+  let pageSize = Number(req.query.pageSize)
+  let pageIndex = Number(req.query.pageIndex)
+  let totalCount = pageSize*pageIndex
+  axios.get('http://localhost:3004/admin').then(response => {
+  let preData = response.data
+  //数据分类
+  if(roleId!==0)
+  {
+    preData.data = preData.data.filter((item)=>{
+      if(item.roleId===roleId)
+        return true
+      else
+        return false
+    })
+  }
+  let count = preData.data.length
+
+  //分页查询
+  if(count <= pageSize){
+    //若实际数量小于单页数量，则将数据全部返回
+    res.json({count:response.data.data.length,...response.data,pageSize:count,pageIndex:1})
+  }
+  else if(count<=totalCount){
+    //若实际数量小于等于要获取的总数量，则返回最后一页数据
+    let start = count-pageSize
+    let end = count
+    preData.data = preData.data.slice(start,end)
+    res.json({count,...preData,pageIndex,pageSize})
+  }
+  else{
+    //若实际数量大于要获取的总数量，则返回要获取的那一页数据
+    let start = totalCount-pageSize
+    let end = totalCount
+    preData.data = preData.data.slice(start,end)
+    res.json({count,...preData,pageIndex,pageSize})
+  }
   })
 });
 
@@ -68,20 +103,6 @@ app.get("/Admin/GetOne", function (req, res) {
 //访问图片
 app.get("/Admin/UpLoad", function (req, res) {
   res.sendFile('./public/test.jpg');
-});
-
-//查询角色列表
-app.get("/Role/List", function (req, res) {
-  console.log('get /Role/List:')
-  axios.get('http://localhost:3004/list',{params:req.query}).then(response => {
-    console.log('response', response.data)
-    if(response.data.length===1){
-      res.json(...response.data)
-    }
-    else{
-      res.json(response.data)
-    }
-  })
 });
 
 //增加角色

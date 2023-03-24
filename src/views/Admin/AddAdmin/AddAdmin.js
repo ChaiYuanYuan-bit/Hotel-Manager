@@ -1,14 +1,11 @@
 import React, {Fragment,useState,useEffect} from 'react';
 import {Button,Drawer,Form,Input,Select } from 'antd'
 import {$add,$getOne,$update} from '../../../api/adminApi'
-import{$list} from '../../../api/roleApi'
+
 import MyNotification from '../../../components/MyNotification'
 import UpLoadAdmin from '../UpLoadAdmin/UpLoadAdmin';
 
-const AddAdmin = ({open,setOpen,loadAdminList,loginId,setLoginId}) => {
-    //角色列表
-    let [roleList,setRoleList] = useState([])
-
+const AddAdmin = ({open,setOpen,loadAdminList,roleList,loginId,setLoginId}) => {
     //创建表单实例
     let[form] = Form.useForm()
 
@@ -23,23 +20,12 @@ const AddAdmin = ({open,setOpen,loadAdminList,loginId,setLoginId}) => {
     };
     //编辑状态
     useEffect(()=>{
-        loadRoleList()
         if(loginId){
             $getOne(loginId).then(data=>form.setFieldsValue(data))
         }
     },[loginId])
 
-    //加载角色下拉框
-    const loadRoleList = async ()=>{
-        try{
-            let data = await $list()
-            data = data.map(r=>({value:r.id,label:r.id+'\t'+r.roleName}))
-            setRoleList(data)
-        }
-        catch(error){
-            setNoteMsg({type:'error',description:'网络错误'})
-        }
-    }
+
     
 
     //表单提交的方法
@@ -134,30 +120,6 @@ const AddAdmin = ({open,setOpen,loadAdminList,loginId,setLoginId}) => {
                 >
                 <Input disabled={loginId ? true:false}/>
                 </Form.Item>
-                {/* <Form.Item
-                label="密码"
-                name="loginPwd"
-                rules={[
-                    {
-                    required: true,
-                    message: '请输入密码',
-                    },
-                ]}
-                >
-                <Input.Password/>
-                </Form.Item> */}
-                {/* <Form.Item
-                label="再次输入密码"
-                name="loginPwd"
-                rules={[
-                    {
-                    required: true,
-                    message: '请再次输入密码',
-                    },
-                ]}
-                >
-                <Input.Password/>
-                </Form.Item> */}
                 <Form.Item
                 label="姓名"
                 name="name"
@@ -194,7 +156,6 @@ const AddAdmin = ({open,setOpen,loadAdminList,loginId,setLoginId}) => {
                 ]}
                 >
                     <UpLoadAdmin form={form}/>
-                {/* <Input/> */}
                 </Form.Item>
                 <Form.Item 
                 label="角色"

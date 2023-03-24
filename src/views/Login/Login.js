@@ -1,11 +1,15 @@
 import React, {useState,useEffect} from "react";
+import { useSelector,useDispatch } from "react-redux";
 import {useNavigate} from 'react-router-dom'
 import { Button, Form, Input } from "antd";
 import MyNotification from '../../components/MyNotification'
-import {$login} from '../../api/adminApi'
+import {$login,$getOne} from '../../api/adminApi'
+import {setAdmin} from "../../redux/LoginAdmin";
 import "./Login.scss";
 
 const Login = () => {
+    //通过useDisPatch派发事件
+    const dispatch = useDispatch()
     //通知框状态
     let [noteMsg,setNoteMsg] = useState({type:'',description:''})
     //表单
@@ -25,6 +29,12 @@ const Login = () => {
        const {message,success} = await $login(values)
        //判断是否登录成功
        if(success){
+        //将账户编号存储到缓存
+        sessionStorage.setItem('loginId',values.loginId)
+        //根据登录名获取账户信息
+        const admin = await $getOne(values.loginId)
+        //将当前登录信息存储到，
+        dispatch(setAdmin({admin}))
         setNoteMsg({type:'success',description:message})
         //跳转到首页
         navigate('/layout')

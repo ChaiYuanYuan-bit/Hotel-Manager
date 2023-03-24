@@ -130,10 +130,18 @@ export default function(){
     const handleTop = (e) => {
         setCurrent(e.key);
         switch(e.key){
+            //个人信息
+            case 'myInfo':
+                navigate('/layout/mine')
+                break
+            //修改密码
+            case 'setPwd':
+                navigate('/layout/upPwd')
+                break
             //退出系统
             case 'exit':
                 showConfirm()
-                break;
+                break
             default:;
         }
       };

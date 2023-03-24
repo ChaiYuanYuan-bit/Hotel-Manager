@@ -1,23 +1,46 @@
 import React,{useState,useEffect} from 'react';
-import { Table,Button,Popconfirm,Image } from 'antd';
-import {$list,$del} from '../../api/adminApi'
+import { Table,Button,Popconfirm,Pagination,Select } from 'antd';
+import {$accountList,$del} from '../../api/adminApi'
+import{$roleList} from '../../api/roleApi'
 import MyNotification from '../../components/MyNotification';
 import AddAdmin from './AddAdmin/AddAdmin';
 
 const Admin = () => {
     //账户列表数据
     let [adminList,setAdminList] = useState([])
+    //角色列表
+    let [roleList,setRoleList] = useState([])
     //通知框状态
     let [noteMsg,setNoteMsg] = useState({type:'',description:''})
     //抽屉状态
     let [open, setOpen] = useState(false);
     //编辑状态所选id
     let [loginId,setLoginId] = useState('')
+    //编辑状态所选id
+    let [roleId,setRoleId] = useState(0)
+    //页码
+    let [pageIndex,setPageIndex] = useState(1)
+    //总数量
+    let [count,setCount] = useState(1)
 
     //初始化加载状态
     useEffect(()=>{
+        loadRoleList()
         loadAdminList()
-    },[])
+    },[pageIndex,roleId])
+
+    //加载角色下拉框
+    const loadRoleList = async ()=>{
+        try{
+            let data = await $roleList()
+            data = data.map(r=>({value:r.id,label:r.id+'\t'+r.roleName}))
+            data.unshift({value:0,label:'全部角色'})
+            setRoleList(data)
+        }
+        catch(error){
+            setNoteMsg({type:'error',description:'网络错误'})
+        }
+    }
 
     //打开右边抽屉
     const showDrawer = () => {
@@ -27,9 +50,13 @@ const Admin = () => {
     //加载账户列表
     const loadAdminList = async ()=>{
         try{
-            let {data,count} = await $list()
-            data = data.map(r=>({...r,key:r.loginId}))
+            let roleData = await $roleList()
+            let {data,count} = await $accountList({roleId,pageSize:8,pageIndex})
+            data = data.map(r=>({...r,key:r.loginId,roleName:roleData[r.roleId-1].roleName}))
+            //设置账户数据
             setAdminList(data)
+            //设置总数量
+            setCount(count)
         }
         catch(error){
             console.log('error', error)
@@ -99,8 +126,9 @@ const Admin = () => {
     {
         title: '角色',
         align:'center',
-        dataIndex: 'roleId',
-        key: 'name',
+        dataIndex: 'roleName',
+        minwidth:'100px',
+        // key: 'roleName',
     },
     {
         title: '操作',
@@ -126,9 +154,34 @@ const Admin = () => {
     return (
         <>
             <div className='search'>
-                <Button onClick={showDrawer}>添加</Button>
+                <div>
+                    <p style={{margin:0,padding:'auto,0', display:'inline-block'}}>角色：</p>
+                    <Select 
+                    options={roleList} 
+                    style={{width:'150px',textAlign:'center'}} 
+                    defaultValue={0}
+                    onSelect = {value=>{setRoleId(value)}}
+                    >
+                    </Select>
+                    <Button type='primary' style={{marginLeft:'20px'}}>查询</Button>
+                    <Button onClick={showDrawer} style={{marginLeft:'20px'}}>添加</Button>
+                </div>
+                
             </div>
-            <Table  columns={columns} dataSource={adminList} />
+
+            <Table  
+            columns={columns} 
+            dataSource={adminList} 
+            pagination={false}
+            />
+
+            <Pagination size='small' 
+            defaultCurrent={pageIndex} 
+            total={count} 
+            pageSize={8} 
+            onChange={(page)=>{setPageIndex(page)}}
+            />
+
             <MyNotification noteMsg = {noteMsg}/>
             <AddAdmin 
             open={open} 
@@ -136,6 +189,7 @@ const Admin = () => {
             loadAdminList={loadAdminList} 
             loginId={loginId} 
             setLoginId={setLoginId}
+            roleList = {roleList}
             />
         </>
     );
