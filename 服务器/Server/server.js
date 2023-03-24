@@ -40,6 +40,13 @@ app.get("/Admin/List", function (req, res) {
   let totalCount = pageSize*pageIndex
   axios.get('http://localhost:3004/admin').then(response => {
   let preData = response.data
+  console.log('pre', preData.data)
+  //删除密码属性
+  preData.data = preData.data.map((item)=>{
+    const {id,loginId,name,phone,photo,roleId} = item
+    return  {id,loginId,name,phone,photo,roleId}
+  })
+  console.log('after', preData.data)
   //数据分类
   if(roleId!==0)
   {
@@ -94,7 +101,8 @@ app.get("/Admin/GetOne", function (req, res) {
   axios.get('http://localhost:3004/admin').then(response => {
     response.data.data.map((item)=>{
       if(item.loginId===req.query.loginId){
-        res.json({...item})
+        const {id,loginId,name,phone,photo,roleId} = item
+        res.json({id,loginId,name,phone,photo,roleId})
       }
     })
   })
@@ -152,7 +160,7 @@ app.post("/Admin/Add", function (req, res) {
     else
     {
       let count = preData.data.length
-      newData = {...preData,data:[...preData.data,{id:count+1,...req.body}]}
+      newData = {...preData,data:[...preData.data,{id:count+1,...req.body,password:'c8837b23ff8aaa8a2dde915473ce0991'}]}
       axios.post('http://localhost:3004/admin',newData)
       .then(response => 
         {

@@ -1,14 +1,21 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import { Form,Input,Button } from 'antd';
 
 const UpdatePwd = () => {
     //定义表单实例
     let [form] = Form.useForm()
 
+    const {admin} = useSelector(store=>store.loginAdmin)
+
     //关闭右边抽屉并清空表单
     const onClose = () => {
         
     };
+    //副作用
+    useEffect(()=>{
+        form.setFieldValue('id',admin.id)
+    },[])
     return (
         <div>
             <Form
@@ -37,7 +44,7 @@ const UpdatePwd = () => {
                 </Form.Item>
                 <Form.Item
                 label="原始密码"
-                name="password"
+                name="prePassword"
                 rules={[
                     {
                     required: true,
@@ -49,7 +56,7 @@ const UpdatePwd = () => {
                 </Form.Item>
                 <Form.Item
                 label="最新密码"
-                name="password1"
+                name="password"
                 rules={[
                     {
                     required: true,
@@ -60,16 +67,26 @@ const UpdatePwd = () => {
                 <Input.Password/>
                 </Form.Item>
                 <Form.Item
+                name="confirm"
                 label="确认密码"
-                name="password2"
+                dependencies={['password']}
+                hasFeedback
                 rules={[
-                    {
+                {
                     required: true,
                     message: '请输入确认密码',
+                },
+                ({ getFieldValue }) => ({
+                    validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('两次密码输入不一致!'));
                     },
+                }),
                 ]}
                 >
-                <Input.Password/>
+                    <Input.Password />
                 </Form.Item>
                 <Form.Item
                 wrapperCol={{
