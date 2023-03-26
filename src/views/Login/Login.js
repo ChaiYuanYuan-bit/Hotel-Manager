@@ -1,7 +1,8 @@
 import React, {useState,useEffect} from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {useNavigate} from 'react-router-dom'
 import { Button, Form, Input } from "antd";
+import md5 from 'md5'
 import MyNotification from '../../components/MyNotification'
 import {$login,$getOne} from '../../api/adminApi'
 import {setAdmin} from "../../redux/LoginAdmin";
@@ -26,6 +27,8 @@ const Login = () => {
     
     //表单成功提交方法
     const onFinish = async (values) => {
+        //对密码进行加密
+        values.loginPwd  = md5(values.loginPwd)
        const {message,success} = await $login(values)
        //判断是否登录成功
        if(success){
@@ -36,8 +39,11 @@ const Login = () => {
         //将当前登录信息存储到，
         dispatch(setAdmin({admin}))
         setNoteMsg({type:'success',description:message})
-        //跳转到首页
-        navigate('/layout')
+        setTimeout(()=>{
+            //跳转到首页
+            navigate('/layout')
+        },1000)
+        
        }
        else{
         setNoteMsg({type:'error',description:message})

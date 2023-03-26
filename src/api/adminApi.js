@@ -1,10 +1,7 @@
 import axiosInstance from '../utils/request'
-import md5 from 'md5'
 
 //登录
 export const $login = async (params)=>{
-    //对密码进行加密
-    params.loginPwd  = md5(params.loginPwd)
     let {data} = await axiosInstance.get('Admin/Login',{params})
     if(data.success){
         sessionStorage.setItem('token',data.token)
@@ -42,8 +39,14 @@ export const $update = async (params)=>{
     return data
 }
 
-//更新单个账户信息
+//删除账户
 export const $del = async (params)=>{
     let {data} = await axiosInstance.delete(`Admin/Delete`,{params})
+    return data
+}
+
+//修改密码
+export const $resetPwd = async (params) => {
+    let {data} = await axiosInstance.post(`Admin/ResetPwd`,params)
     return data
 }

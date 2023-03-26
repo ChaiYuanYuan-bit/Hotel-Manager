@@ -4,6 +4,9 @@ import Role from "../views/Role/Role";
 import Admin from "../views/Admin/Admin";
 import Mine from "../views/Admin/Mine/Mine";
 import UpdatePwd from "../views/Admin/UpdatePwd/UpdatePwd";
+import RoomType from "../views/Type/Type";
+import Room from "../views/Room/Room";
+import Total from "../views/Total/Total";
 
 export default [
 	{
@@ -23,8 +26,20 @@ export default [
 				element:<Mine/>
 			},
 			{
-				path:'upPwd',
+				path:'pwd',
 				element:<UpdatePwd/>
+			},
+			{
+				path:'type',
+				element:<RoomType/>
+			},
+			{
+				path:'room',
+				element:<Room/>
+			},
+			{
+				path:'total',
+				element:<Total/>
 			}
         ]
 	},

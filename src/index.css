@@ -17,3 +17,7 @@ body{
 .search{
     margin-bottom: 5px;
 }
+
+.publish-quill .ql-editor{
+    min-height: 300px;
+}

@@ -124,6 +124,18 @@ export default function(){
             case 'admin':
                 navigate('/layout/admin')
                 break;
+            //客房管理
+            case 'type':
+                navigate('/layout/type')
+                break
+            //房间管理
+            case 'room':
+                navigate('/layout/room')
+                break
+            //营业统计
+            case 'total':
+                navigate('/layout/total')
+                break
         }
     }
     //顶部菜单点击事件
@@ -136,7 +148,7 @@ export default function(){
                 break
             //修改密码
             case 'setPwd':
-                navigate('/layout/upPwd')
+                navigate('/layout/pwd')
                 break
             //退出系统
             case 'exit':
