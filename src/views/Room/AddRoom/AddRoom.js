@@ -1,6 +1,5 @@
 import React, {Fragment,useState,useEffect} from 'react';
 import {Button,Drawer,Form,Input,Select } from 'antd'
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {$getOne,$update,$add} from '../../../api/roomApi'
 import {$listToUpdate,$stateList} from '../../../api/stateApi'
@@ -78,12 +77,13 @@ const AddRoom = ({open,setOpen,loadRoomList,roomTypeList,roomId,setRoomId}) => {
                     loadRoomList()
                     setOpen(false)
                     setRoomId(0)   //取消编辑状态
-                    form.resetFields()
+                    clear()
                 }
                 else{
                     setNoteMsg({type:'error',description:message})
                     setRoomId(0)   //取消编辑状态
                     setOpen(false)
+                    clear()
                 }
             }
             else{
@@ -99,6 +99,7 @@ const AddRoom = ({open,setOpen,loadRoomList,roomTypeList,roomId,setRoomId}) => {
                 else{
                     setNoteMsg({type:'error',description:message})
                     setOpen(false)
+                    clear()
                 }
             }
             
@@ -106,6 +107,7 @@ const AddRoom = ({open,setOpen,loadRoomList,roomTypeList,roomId,setRoomId}) => {
         catch(error){
             setNoteMsg({type:'error',description:'网络错误'})
             setOpen(false)
+            clear()
         }
     }
     //清空表单

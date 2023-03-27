@@ -26,7 +26,7 @@
       {
         "id": 1,
         "loginId": "admin",
-        "name": "柴园园",
+        "name": "admin",
         "phone": "15216757930",
         "photo": "admin.jpg",
         "password": "c8837b23ff8aaa8a2dde915473ce0991",
@@ -271,32 +271,32 @@
       {
         "roomId": "1001",
         "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
-        },
-        "roomTypeId": 1
-      },
-      {
-        "roomId": "1002",
-        "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
-        },
-        "roomTypeId": 1
-      },
-      {
-        "roomId": "1003",
-        "roomState": {
           "roomStateId": 2,
           "roomStateName": "入住"
         },
         "roomTypeId": 1
       },
       {
-        "roomId": "1004",
+        "roomId": "1002",
+        "roomState": {
+          "roomStateId": 2,
+          "roomStateName": "入住"
+        },
+        "roomTypeId": 4
+      },
+      {
+        "roomId": "1003",
         "roomState": {
           "roomStateId": 1,
           "roomStateName": "空闲"
+        },
+        "roomTypeId": 1
+      },
+      {
+        "roomId": "1004",
+        "roomState": {
+          "roomStateId": 2,
+          "roomStateName": "入住"
         },
         "roomTypeId": 2
       },
@@ -311,16 +311,16 @@
       {
         "roomId": "2001",
         "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
+          "roomStateId": 2,
+          "roomStateName": "入住"
         },
         "roomTypeId": 2
       },
       {
         "roomId": "2002",
         "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
+          "roomStateId": 2,
+          "roomStateName": "入住"
         },
         "roomTypeId": 3
       },
@@ -351,8 +351,8 @@
       {
         "roomId": "3001",
         "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
+          "roomStateId": 2,
+          "roomStateName": "入住"
         },
         "roomTypeId": 10
       },
@@ -375,8 +375,8 @@
       {
         "roomId": "3004",
         "roomState": {
-          "roomStateId": 2,
-          "roomStateName": "入住"
+          "roomStateId": 1,
+          "roomStateName": "空闲"
         },
         "roomTypeId": 10
       },
@@ -391,32 +391,32 @@
       {
         "roomId": "3006",
         "roomState": {
-          "roomStateId": 2,
-          "roomStateName": "入住"
+          "roomStateId": 1,
+          "roomStateName": "空闲"
         },
         "roomTypeId": 11
       },
       {
         "roomId": "8001",
         "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
+          "roomStateId": 2,
+          "roomStateName": "入住"
         },
         "roomTypeId": 6
       },
       {
         "roomId": "8002",
         "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
+          "roomStateId": 2,
+          "roomStateName": "入住"
         },
         "roomTypeId": 7
       },
       {
         "roomId": "8003",
         "roomState": {
-          "roomStateId": 1,
-          "roomStateName": "空闲"
+          "roomStateId": 2,
+          "roomStateName": "入住"
         },
         "roomTypeId": 8
       },
@@ -458,6 +458,176 @@
     {
       "roomStateId": 3,
       "roomStateName": "维修"
+    }
+  ],
+  "guest": {
+    "data": [
+      {
+        "id": 1,
+        "guestName": "宋钟基",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "1001",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 500,
+        "totalMoney": 7920,
+        "guestNum": 2,
+        "resideStateId": 1
+      },
+      {
+        "id": 2,
+        "guestName": "张国荣",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "1002",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 500,
+        "totalMoney": 7920,
+        "guestNum": 2,
+        "resideStateId": 2
+      },
+      {
+        "id": 3,
+        "guestName": "周杰伦",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "8001",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 500,
+        "totalMoney": 7920,
+        "guestNum": 3,
+        "resideStateId": 1
+      },
+      {
+        "id": 4,
+        "guestName": "刘长海",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "8002",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 500,
+        "totalMoney": 8000,
+        "guestNum": 4,
+        "resideStateId": 1
+      },
+      {
+        "id": 5,
+        "guestName": "美羊羊",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "3001",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 500,
+        "totalMoney": 6000,
+        "guestNum": 1,
+        "resideStateId": 1
+      },
+      {
+        "id": 6,
+        "guestName": "沸羊羊",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "3002",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 500,
+        "totalMoney": 6000,
+        "guestNum": 2,
+        "resideStateId": 1
+      },
+      {
+        "id": 7,
+        "guestName": "红太狼",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "1004",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 600,
+        "totalMoney": 8000,
+        "guestNum": 3,
+        "resideStateId": 2
+      },
+      {
+        "id": 8,
+        "guestName": "艾伦",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "1005",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 300,
+        "totalMoney": 500,
+        "guestNum": 2,
+        "resideStateId": 2
+      },
+      {
+        "id": 9,
+        "guestName": "吉克",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "2001",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 300,
+        "totalMoney": 800,
+        "guestNum": 2,
+        "resideStateId": 2
+      },
+      {
+        "id": 10,
+        "guestName": "噶比",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "2002",
+        "resideDate": "2023/2/13 8:42:57",
+        "leaveDate": "2023/2/21 11:52:21",
+        "deposit": 300,
+        "totalMoney": 500,
+        "guestNum": 2,
+        "resideStateId": 2
+      },
+      {
+        "id": 11,
+        "guestName": "张家鹏",
+        "identityId": "142402199123456321",
+        "phone": "132456789",
+        "roomId": "1007",
+        "resideDate": "2023/03/27 16:32:21",
+        "leaveDate": "2023/03/27 16:32:23",
+        "deposit": 300,
+        "totalMoney": 500,
+        "guestNum": 2,
+        "resideStateId": 2
+      },
+      {
+        "id": 12,
+        "guestName": "长江河",
+        "identityId": "1234561235",
+        "phone": "123445665",
+        "roomId": "8003",
+        "resideDate": "2023/03/27 18:01:35",
+        "leaveDate": "2023/03/28 18:01:38",
+        "deposit": "1000",
+        "totalMoney": 6000,
+        "guestNum": "2",
+        "resideStateId": 2
+      }
+    ]
+  },
+  "resideState": [
+    {
+      "resideStateId": 1,
+      "resideStateName": "已结账"
+    },
+    {
+      "resideStateId": 2,
+      "resideStateName": "未结账"
     }
   ]
 }

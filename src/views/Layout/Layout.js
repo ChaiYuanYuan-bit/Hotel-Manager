@@ -91,7 +91,7 @@ const  siderItems=[
         ]
     },
     {
-        key: '3',
+        key: 'guest',
         icon: <SettingOutlined />,
         label: '客户管理',
     },
@@ -136,6 +136,10 @@ export default function(){
             case 'total':
                 navigate('/layout/total')
                 break
+            //营业统计
+            case 'guest':
+                navigate('/layout/guest')
+                break
         }
     }
     //顶部菜单点击事件
@@ -178,7 +182,7 @@ export default function(){
     return (
         <Layout className='ant-layout '>
             <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
-                <div className="logo" ><p>{collapsed ? 'Bing' : 'Bing酒店后台管理系统'}</p></div>
+                <div className="logo" ><p>{collapsed ? 'Moon' : 'Moon酒店后台管理系统'}</p></div>
                 <Menu
                 theme="dark"
                 mode="inline"

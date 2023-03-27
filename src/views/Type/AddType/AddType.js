@@ -42,12 +42,13 @@ const AddType = ({open,setOpen,loadList,typeList,typeId,setTypeId}) => {
                     loadList()
                     setOpen(false)
                     setTypeId(0)   //取消编辑状态
-                    form.resetFields()
+                    clear()
                 }
                 else{
                     setNoteMsg({type:'error',description:message})
                     setTypeId(0)   //取消编辑状态
                     setOpen(false)
+                    clear()
                 }
             }
             else{
@@ -63,6 +64,7 @@ const AddType = ({open,setOpen,loadList,typeList,typeId,setTypeId}) => {
                 else{
                     setNoteMsg({type:'error',description:message})
                     setOpen(false)
+                    clear()
                 }
             }
             
@@ -70,6 +72,7 @@ const AddType = ({open,setOpen,loadList,typeList,typeId,setTypeId}) => {
         catch(error){
             setNoteMsg({type:'error',description:'网络错误'})
             setOpen(false)
+            clear()
         }
     }
     //清空表单

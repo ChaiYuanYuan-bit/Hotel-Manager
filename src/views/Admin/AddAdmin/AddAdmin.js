@@ -63,6 +63,7 @@ const AddAdmin = ({open,setOpen,loadAdminList,roleList,loginId,setLoginId}) => {
                 else{
                     setNoteMsg({type:'error',description:message})
                     setOpen(false)
+                    clear()
                 }
             }
             
@@ -70,6 +71,7 @@ const AddAdmin = ({open,setOpen,loadAdminList,roleList,loginId,setLoginId}) => {
         catch(error){
             setNoteMsg({type:'error',description:'网络错误'})
             setOpen(false)
+            clear()
         }
     }
     //清空表单

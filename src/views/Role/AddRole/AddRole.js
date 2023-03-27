@@ -43,6 +43,7 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
                     setNoteMsg({type:'error',description:message})
                     setRoleId(-1)   //取消编辑状态
                     setOpen(false)
+                    clear()
                 }
             }
             else{
@@ -58,6 +59,7 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
                 else{
                     setNoteMsg({type:'error',description:message})
                     setOpen(false)
+                    clear()
                 }
             }
             
@@ -65,6 +67,7 @@ const AddRole = ({open,setOpen,loadList,roleId,setRoleId}) => {
         catch(error){
             setNoteMsg({type:'error',description:'网络错误'})
             setOpen(false)
+            clear()
         }
     }
 

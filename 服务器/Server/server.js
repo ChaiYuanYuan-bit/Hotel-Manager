@@ -3,6 +3,7 @@ const axios = require("axios")
 const app = express()
 const jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
+const { response } = require("express");
 let key = "fuTkisMQQ2j1ESC0cbaQen1ZWmkMdvLx"
 let expir = 60 * 30 //30min(token过期的时间)
 
@@ -118,7 +119,7 @@ app.get("/Admin/List", function (req, res) {
   }
   else if(count<=totalCount){
     //若实际数量小于等于要获取的总数量，则返回最后一页数据
-    let start = count-pageSize
+    let start = parseInt(count/pageSize)*pageSize
     let end = count
     preData.data = preData.data.slice(start,end)
     res.json({count,...preData,pageIndex,pageSize})
@@ -451,7 +452,7 @@ app.get("/Room/List", function (req, res) {
         }
         else if(count<=totalCount){
           //若实际数量小于等于要获取的总数量，则返回最后一页数据
-          let start = count-pageSize
+          let start = parseInt(count/pageSize)*pageSize
           let end = count
           preData.data = preData.data.slice(start,end)
           res.json({count,...preData,data:AddRoomType(roomType,preData.data),pageIndex,pageSize})
@@ -586,6 +587,31 @@ app.delete("/Room/Delete", function (req, res) {
 }).catch(error=>console.log('error', error))
 });
 
+//查询可用客房列表
+app.get("/Room/Remain",function (req, res){
+  const {roomTypeId} = req.query
+  axios.get('http://localhost:3004/room').then((response1)=>{
+    const all_rooms = response1.data.data
+    const want_rooms = all_rooms.filter(r=>r.roomTypeId===roomTypeId*1)
+    axios.get('http://localhost:3004/guest').then(response2=>{
+      const all_guests = response2.data.data
+      const remain_rooms = want_rooms.filter(r=>{
+        const room = all_guests.find(g=>{
+          return r.roomId===g.roomId
+        })
+        if(room)
+        {
+          return false
+        }
+        else{
+          return true
+        }
+      })
+      res.json(remain_rooms)
+    })
+  })
+})
+
 
 /**********************************RoomState*****************************************/
 
@@ -616,8 +642,149 @@ app.get("/State/ListToUpdate", function (req, res) {
   })
 });
 
+/**********************************Guest*****************************************/
 
 
+//查询顾客列表 
+app.get("/GuestRecord/List", function (req, res) {
+  console.log('get /GuestRecord/List:')
+  let guestName = req.query.guestName
+  let guestStateId = Number(req.query.guestStateId)
+  let pageSize = Number(req.query.pageSize)
+  let pageIndex = Number(req.query.pageIndex)
+  let totalCount = pageSize*pageIndex
+  let preData = []
+  let roomType=[]
+  let rooms=[]
+  let resideState=[]
+
+  axios.get('http://localhost:3004/guest').then(response=>{
+      preData = response.data
+      let count = preData.data.length
+      //数据筛选
+      //查询顾客姓名
+      if(guestName!==''){
+        preData.data=[preData.data.find(item=>item.guestName===guestName)]
+      } 
+      //查询状态
+      if(guestStateId>0)
+      {
+        preData.data=preData.data.filter(item=>item.resideStateId===guestStateId)
+      }
+      //分页查询
+      if(count <= pageSize || totalCount<=0){
+        //若实际数量小于单页数量，则将数据全部返回
+        return {count,...response.data,pageSize:count,pageIndex:1}
+      }
+      else if(count<=totalCount){
+        //若实际数量小于等于要获取的总数量，则返回最后一页数据
+        let start = parseInt(count/pageSize)*pageSize
+        let end = count
+        preData.data = preData.data.slice(start,end)
+        return {count,...preData,pageIndex,pageSize}
+      }
+      else
+      {
+        //若实际数量大于要获取的总数量，则返回要获取的那一页数据
+        let start = totalCount-pageSize
+        let end = totalCount
+        preData.data = preData.data.slice(start,end)
+        return {count,...preData,pageIndex,pageSize}
+      }
+  }).then(guestData=>{
+    preData = guestData
+    axios.get('http://localhost:3004/roomType').then(response1=>{
+      roomType = response1.data
+      axios.get('http://localhost:3004/room').then(
+        response2=>{
+          rooms=response2.data.data
+          axios.get('http://localhost:3004/resideState').then(response3=>{
+            resideState = response3.data
+            preData.data=preData.data.map((d=>{
+              const roomId = d.roomId
+              const resideStateId = d.resideStateId
+              const roomTypeId = rooms.find((r)=>{
+                return r.roomId===roomId
+              }).roomTypeId
+              const roomtype = roomType.find((t)=>{
+                return t.id===roomTypeId
+              })
+              const stata = resideState.find((s)=>{
+                return s.resideStateId === resideStateId
+              })
+              return {...d,room:{roomType:roomtype},resideState:stata}
+            }))
+
+            res.json({...preData})
+          })
+        }
+      )
+    })
+  })
+});
+
+//添加顾客
+app.post("/GuestRecord/Add",function(req,res){
+  const newGuest = req.body
+  axios.get("http://localhost:3004/guest").then(response=>{
+    const all_guests = response.data.data
+    const isRepeat = all_guests.find(item=>item.guestName===newGuest.guestName)
+    if(isRepeat)
+    {
+      res.json({success:false,message:'顾客已存在'})
+    }
+    else{
+      all_guests.push({
+        id:all_guests.length+1,
+        guestName:newGuest.guestName,
+        identityId:newGuest.identityId,
+        phone:newGuest.phone,
+        roomId:newGuest.roomId,
+        resideDate:newGuest.resideDate,
+        leaveDate:newGuest.leaveDate,
+        deposit:newGuest.deposit,
+        totalMoney:newGuest.totalMoney,
+        guestNum:newGuest.guestNum,
+        resideStateId:2
+      })
+      //更新guest列表
+      axios.put("http://localhost:3004/guest",{...response.data,data:all_guests}).then(()=>{
+      //更新客房状态
+      axios.get('http://localhost:3004/room').then(response=>{
+        const rooms = response.data.data
+        const room_index = rooms.findIndex((item)=>{
+          return item.roomId===newGuest.roomId
+        })
+        rooms[room_index].roomState={
+          "roomStateId": 2,
+          "roomStateName": "入住"
+        }
+        axios.put('http://localhost:3004/room',{...response.data,data:rooms}).then(()=>{
+          res.json({success:true,message:"添加成功"})
+        })
+      })
+      }).catch(error=>{
+        res.json({success:false,message:"添加失败"})
+        console.log('error', error)
+      })
+    }
+  })
+})
+
+/**********************************GuestState*****************************************/
+
+//查询结账状态列表
+app.get("/GuestState/List", function (req, res) {
+  console.log('get /GuestState/List:')
+  axios.get('http://localhost:3004/resideState',{params:req.query}).then(response => {
+    if(response.data.length===1){
+      res.json(...response.data)
+    }
+    else{
+      res.json(response.data)
+    }
+  })
+});
 
 
 app.listen(5000, "localhost", (err) => {

@@ -11,6 +11,11 @@ export const $getOne = async (roomId)=>{
     let {data} = await axiosInstance.get(`Room/GetOne`,{params:{roomId}})
     return data
 }
+//查询可用客房信息
+export const $remainRoomList = async (params)=>{
+    let {data} = await axiosInstance.get('Room/Remain',{params})
+    return data
+}
 //修改客房信息
 export const $update = async (params)=>{
     let {data} = await axiosInstance.put('Room/Update',params)

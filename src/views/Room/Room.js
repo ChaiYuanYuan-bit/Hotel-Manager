@@ -88,9 +88,6 @@ const Room = () => {
     const showDrawer = () => {
         setOpen(true)//打开抽屉
     }
-   
-
-    
 
     //编辑角色
     const handleEdit =(roomId,roomStateName) => {
@@ -129,7 +126,6 @@ const Room = () => {
     }
     }
     
-
     //表格列信息
     const columns = [
     {
