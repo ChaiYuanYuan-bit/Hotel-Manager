@@ -1,0 +1,616 @@
+{
+	"info": {
+		"_postman_id": "98678d09-ec08-49d9-8010-eb1b0e61a70c",
+		"name": "Moon酒店后台管理系统",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20271412"
+	},
+	"item": [
+		{
+			"name": "房型管理",
+			"item": [
+				{
+					"name": "添加房型",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"typeName\":\"电竞双人间\",\r\n    \"roomTypePrice\":300,\r\n    \"bedNum\":2,\r\n    \"typeDescription\":\"这是电竞双人间\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/RoomType/Add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"RoomType",
+								"Add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取房型列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/RoomType/List",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"RoomType",
+								"List"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改房型",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"typeName\": \"电竞双人间\",\r\n    \"roomTypePrice\": 400,\r\n    \"bedNum\": 2,\r\n    \"typeDescription\": \"这是电竞双人间，价格为400/晚\",\r\n    \"id\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/RoomType/Update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"RoomType",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除房型",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/RoomType/Delete?id=11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"RoomType",
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "角色管理",
+			"item": []
+		},
+		{
+			"name": "账户管理",
+			"item": [
+				{
+					"name": "登录验证",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Admin/Login?loginId=admin&loginPwd=c8837b23ff8aaa8a2dde915473ce0991",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Admin",
+								"Login"
+							],
+							"query": [
+								{
+									"key": "loginId",
+									"value": "admin"
+								},
+								{
+									"key": "loginPwd",
+									"value": "c8837b23ff8aaa8a2dde915473ce0991"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改密码",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"prePassword\":\"c8837b23ff8aaa8a2dde915473ce0991\",\r\n    \"password\":\"c8837b23ff8aaa8a2dde915473ce0991\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/Admin/ResetPwd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Admin",
+								"ResetPwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询账户列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Admin/List?pageSize=8&pageIndex=1&roleId=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Admin",
+								"List"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "8",
+									"description": "每页条数"
+								},
+								{
+									"key": "pageIndex",
+									"value": "1",
+									"description": "查询的页数"
+								},
+								{
+									"key": "roleId",
+									"value": "0",
+									"description": "不为零时查询所有人"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询单个账户",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Admin/GetOne?loginId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Admin",
+								"GetOne"
+							],
+							"query": [
+								{
+									"key": "loginId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "访问账户头像",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Admin/Upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Admin",
+								"Upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "上传账户头像",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Admin/UploadImg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Admin",
+								"UploadImg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "增加账户",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "修改账户",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "删除账户",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "客房列表",
+			"item": [
+				{
+					"name": "查询客房列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Room/List?pageSize=8&pageIndex=1&roomTypeId=10&roomStateId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Room",
+								"List"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "8",
+									"description": "每页条数"
+								},
+								{
+									"key": "pageIndex",
+									"value": "1",
+									"description": "查询的页数"
+								},
+								{
+									"key": "roomTypeId",
+									"value": "10",
+									"description": "筛选房型"
+								},
+								{
+									"key": "roomStateId",
+									"value": "1",
+									"description": "筛选状态"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询客房状态",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/State/List",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"State",
+								"List"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询客房状态（未入住）",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/State/ListToUpdate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"State",
+								"ListToUpdate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询单个客房",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Room/GetOne?roomId=1002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Room",
+								"GetOne"
+							],
+							"query": [
+								{
+									"key": "roomId",
+									"value": "1002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改客房信息",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roomId\":\"1001\",\r\n    \"roomStateId\": 3,\r\n    \"roomTypeId\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/Room/Update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Room",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "添加客房",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roomId\":\"1007\",\r\n    \"roomStateId\": 1,\r\n    \"roomTypeId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/Room/Add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Room",
+								"Add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除客房",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/Room/Delete?roomId=1007",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Room",
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "roomId",
+									"value": "1007"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询可用客房列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/Room/Remain?roomTypeId=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"Room",
+								"Remain"
+							],
+							"query": [
+								{
+									"key": "roomTypeId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "顾客管理",
+			"item": [
+				{
+					"name": "查询顾客列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/GuestRecord/List?pageSize=8&pageIndex=2&guestName&resideStateId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"GuestRecord",
+								"List"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "8"
+								},
+								{
+									"key": "pageIndex",
+									"value": "2"
+								},
+								{
+									"key": "guestName",
+									"value": null
+								},
+								{
+									"key": "resideStateId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "添加顾客",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"guestName\": \"张国荣\",\r\n    \"identityId\": \"142402199123456321\",\r\n    \"phone\": \"132456789\",     \r\n    \"roomTypeId\": 1,  \r\n    \"roomId\": \"1007\", \r\n    \"resideDate\": \"2023/03/27 16:32:21\",  \r\n    \"leaveDate\": \"2023/03/27 16:32:23\", \r\n    \"deposit\": 'aa',  \r\n    \"guestNum\": 'aa'  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/GuestRecord/Add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"GuestRecord",
+								"Add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
