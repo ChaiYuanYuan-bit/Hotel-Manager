@@ -164,6 +164,7 @@ app.get("/Admin/UpLoad", function (req, res) {
 //增加账户
 app.post("/Admin/Add", function (req, res) {
   console.log('post /Admin/Add:')
+  console.log('req.body', req.body)
   axios.get('http://localhost:3004/admin').then(response => 
   {
     preData = response.data
@@ -605,7 +606,11 @@ app.get("/Room/Remain",function (req, res){
     })
   })
 })
-
+app.get("/Room/TotalPrice",function(req,res){
+  axios.get('http://localhost:3004/totalPrice').then(response=>{
+    res.json(response.data)
+  })
+})
 
 /**********************************RoomState*****************************************/
 
@@ -653,12 +658,18 @@ app.get("/GuestRecord/List", function (req, res) {
 
   axios.get('http://localhost:3004/guest').then(response=>{
       preData = response.data
-      let count = preData.data.length
       //数据筛选
       //查询顾客姓名
       if(guestName!==''){
-        preData.data=[preData.data.find(item=>item.guestName===guestName)]
+        const result = preData.data.find(item=>item.guestName===guestName)
+        if(result){
+          preData.data=[result]
+        }
+        else{
+          preData.data=[]
+        }
       } 
+      let count = preData.data.length
       //查询状态
       if(guestStateId>0)
       {
@@ -707,7 +718,6 @@ app.get("/GuestRecord/List", function (req, res) {
               })
               return {...d,room:{roomType:roomtype},resideState:stata}
             }))
-
             res.json({...preData})
           })
         }

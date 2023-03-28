@@ -181,11 +181,12 @@ export default function(){
 
     return (
         <Layout className='ant-layout '>
-            <Sider trigger={null} collapsible collapsed={collapsed} width={250}>
+            <Sider trigger={null} collapsible  collapsed={collapsed} width={250}>
                 <div className="logo" ><p>{collapsed ? 'Moon' : 'Moon酒店后台管理系统'}</p></div>
                 <Menu
                 theme="dark"
                 mode="inline"
+                
                 defaultSelectedKeys={['1']}
                 onClick={handleSider}
                 items={siderItems}

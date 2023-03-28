@@ -47,8 +47,7 @@
         "name": "派克",
         "phone": "123132113",
         "photo": "派克.jpg",
-        "password": "c8837b23ff8aaa8a2dde915473ce0991",
-        "roleId": "3"
+        "roleId": 3
       },
       {
         "id": 4,
@@ -177,12 +176,12 @@
         "roleId": 5
       },
       {
-        "id": 18,
+        "id": 17,
         "loginId": "test18",
         "name": "test18",
         "phone": "test18",
         "photo": "infinity-376695.jpg",
-        "roleId": 3,
+        "roleId": 2,
         "password": "c8837b23ff8aaa8a2dde915473ce0991"
       }
     ]
@@ -264,6 +263,13 @@
       "bedNum": "4",
       "typeDescription": "<p>电竞四人间，要你来战！</p>",
       "id": 11
+    },
+    {
+      "typeName": "情趣单人房",
+      "roomTypePrice": "300",
+      "bedNum": "2",
+      "typeDescription": "<p>一个人玩吧</p>",
+      "id": 12
     }
   ],
   "room": {
@@ -443,6 +449,14 @@
           "roomStateName": "入住"
         },
         "roomTypeId": 1
+      },
+      {
+        "roomId": "9001",
+        "roomState": {
+          "roomStateId": 2,
+          "roomStateName": "入住"
+        },
+        "roomTypeId": 12
       }
     ]
   },
@@ -617,6 +631,19 @@
         "totalMoney": 6000,
         "guestNum": "2",
         "resideStateId": 2
+      },
+      {
+        "id": 13,
+        "guestName": "刘昌海",
+        "identityId": "1651611513131",
+        "phone": "566131131",
+        "roomId": "9001",
+        "resideDate": "2023/03/28 18:26:54",
+        "leaveDate": "2024/03/30 18:26:59",
+        "deposit": "10000",
+        "totalMoney": "10000000",
+        "guestNum": "1",
+        "resideStateId": 1
       }
     ]
   },
@@ -628,6 +655,44 @@
     {
       "resideStateId": 2,
       "resideStateName": "未结账"
+    }
+  ],
+  "totalPrice": [
+    {
+      "roomTypeName": "总统套房",
+      "totalMoney": 15000
+    },
+    {
+      "roomTypeName": "行政套房",
+      "totalMoney": 8000
+    },
+    {
+      "roomTypeName": "豪华套房",
+      "totalMoney": 6000
+    },
+    {
+      "roomTypeName": "商务套房",
+      "totalMoney": 4000
+    },
+    {
+      "roomTypeName": "标准套房",
+      "totalMoney": 2500
+    },
+    {
+      "roomTypeName": "大床房",
+      "totalMoney": 5000
+    },
+    {
+      "roomTypeName": "双床房",
+      "totalMoney": 2000
+    },
+    {
+      "roomTypeName": "三人间",
+      "totalMoney": 1500
+    },
+    {
+      "roomTypeName": "情趣单人房",
+      "totalMoney": 0
     }
   ]
 }

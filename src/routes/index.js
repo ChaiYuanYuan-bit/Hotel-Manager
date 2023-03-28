@@ -6,7 +6,7 @@ import Mine from "../views/Admin/Mine/Mine";
 import UpdatePwd from "../views/Admin/UpdatePwd/UpdatePwd";
 import RoomType from "../views/Type/Type";
 import Room from "../views/Room/Room";
-import Total from "../views/Total/Total";
+import TotalPrice from "../views/TotalPrice/TotalPrice";
 import Guest from "../views/Guest/Guest";
 
 export default [
@@ -40,7 +40,7 @@ export default [
 			},
 			{
 				path:'total',
-				element:<Total/>
+				element:<TotalPrice/>
 			},
 			{
 				path:'guest',

@@ -274,7 +274,8 @@ const Guest = () => {
                     <Input onChange={e=>setGuestName(e.target.value)} style={{margin:0,padding:'auto,0',width:'120px'}}/>
                     <Select 
                     options={resideStateList}
-                    defaultValue={0} 
+                    defaultActiveFirstOption
+                    defaultValue={{value:0,label:'请选择结账状态'}} 
                     style={{width:'150px',textAlign:'center',marginLeft:'20px'}} 
                     onSelect = {value=>setGuestStateId(value)}
                     >

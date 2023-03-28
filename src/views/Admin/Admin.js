@@ -159,7 +159,7 @@ const Admin = () => {
                     <Select 
                     options={roleList} 
                     style={{width:'150px',textAlign:'center'}} 
-                    defaultValue={0}
+                    defaultValue={{value:0,label:'全部角色'}}
                     onSelect = {value=>{setRoleId(value)}}
                     >
                     </Select>

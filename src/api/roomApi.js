@@ -31,3 +31,8 @@ export const $del = async (roomId)=>{
     let {data} = await axiosInstance.delete('Room/Delete',{params:{roomId}})
     return data
 }
+//显示销售统计
+export const $totalTypePrice = async () => {
+    let {data} = await axiosInstance.get('Room/TotalPrice')
+    return data
+}

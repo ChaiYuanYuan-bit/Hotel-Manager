@@ -39,6 +39,7 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
         }
     },[guestId])
 
+
     //加载可选客房
     const loadRemainRoom = async()=>{
         try {
@@ -202,7 +203,7 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
                     <Select 
                     options={roomTypeList}
                     onClick={()=>{loadRemainRoom()}}
-                    onChange={value=>setRoomTypeId(value)}
+                    onChange={value=>{setRoomTypeId(value);loadRemainRoom();}}
                     ></Select>
                 </Form.Item>
                 <Form.Item 

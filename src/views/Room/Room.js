@@ -200,14 +200,16 @@ const Room = () => {
                     <Select 
                     options={roomTypeList} 
                     style={{width:'150px',textAlign:'center'}} 
-                    defaultValue={0}
+                    defaultActiveFirstOption
+                    defaultValue={{value:0,label:'全部房型'}}
                     onSelect = {value=>{setRoomTypeId(value)}}
                     >
                     </Select>
                     <Select 
                     options={roomStateList} 
                     style={{width:'150px',textAlign:'center',marginLeft:'20px'}} 
-                    defaultValue={0}
+                    defaultActiveFirstOption
+                    defaultValue={{value:0,label:'全部状态'}}
                     onSelect = {value=>{setRoomStateId(value)}}
                     >
                     </Select>
