@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { Table,Button,Popconfirm,Pagination,Select,Tag, Input } from 'antd';
-import {$guestList} from '../../api/guestApi'
+import {$guestList,$checkout,$del} from '../../api/guestApi'
 import{$typeList} from '../../api/typeApi'
 import{$stateList} from '../../api/guestApi'
 import MyNotification from '../../components/MyNotification';
@@ -65,7 +65,7 @@ const Guest = () => {
             let {data,count} = await $guestList({pageSize:8,pageIndex,guestName,guestStateId})
             data = data.map(r=>({
                 key:r.roomId,
-                guestId:r.guestId,
+                guestId:r.id,
                 identityId:r.identityId,
                 guestName:r.guestName,
                 phone:r.phone,
@@ -97,20 +97,22 @@ const Guest = () => {
     }
 
     //编辑角色
-    const handleEdit =(guestId,resideStateName) => {
-        if(resideStateName==="入住"){
-            setNoteMsg({type:'error',description:'当前状态不可修改'})
-        }
-        else{
-            setGuestId(guestId)//设置为编辑状态
-            setOpen(true)
-        }
+    const handleEdit =(guestId) => {
+        setGuestId(guestId)//设置为编辑状态
+        setOpen(true)
+    }
+    //结账
+    const handleCheckout = (guestId) => {
+      $checkout({guestId}).then(response=>{
+        setNoteMsg({type:'success',description:'消费总金额为'+response.totalMoney})
+        loadGuestList()
+      }).catch(error=>setNoteMsg({type:'error',description:'网络错误，请稍后再试!'}))
     }
 
     //删除客房
-    const del = async (roomId) => {
+    const del = async (guestId) => {
       try{
-        const {success,message} = await $del(roomId)
+        const {success,message} = await $del(guestId)
         if(success)
         {
                 setNoteMsg({type:'success',description:message})
@@ -233,16 +235,16 @@ const Guest = () => {
         width:'10%',
         render: (ret) => (
             <>
-            {ret.resideStateName==="已结账"? 
+            {ret.resideStateName!=="已结账"? 
             <>
             <Button 
-            onClick={()=>{handleEdit(ret.guestId,ret.resideStateName)}} 
+            onClick={()=>{handleEdit(ret.guestId)}} 
             style={{margin:'5px',borderColor:'orange',color:'orange'}}  
             size="middle">
                 编辑
             </Button>
             <Button 
-            onClick={()=>{handleEdit(ret.guestId,ret.resideStateName)}} 
+            onClick={()=>{handleCheckout(ret.guestId)}} 
             style={{margin:'5px',borderColor:'lightseagreen',color:'lightseagreen'}}  
             size="middle">
                 结账
@@ -303,7 +305,6 @@ const Guest = () => {
             loadGuestList={loadGuestList} 
             guestId={guestId} 
             setGuestId={setGuestId}
-            // roomStateList={roomStateList}
             roomTypeList = {roomTypeList}
             />
         </>

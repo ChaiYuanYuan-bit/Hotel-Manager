@@ -27,7 +27,7 @@
         "id": 1,
         "loginId": "admin",
         "name": "admin",
-        "phone": "15216757930",
+        "phone": "123132113",
         "photo": "admin.jpg",
         "password": "c8837b23ff8aaa8a2dde915473ce0991",
         "roleId": 1
@@ -36,7 +36,7 @@
         "id": 2,
         "loginId": "joker",
         "name": "萨科",
-        "phone": 15316345481,
+        "phone": "123132113",
         "photo": "萨科.jpg",
         "password": "c8837b23ff8aaa8a2dde915473ce0991",
         "roleId": 2
@@ -45,7 +45,7 @@
         "id": 3,
         "loginId": "pike",
         "name": "派克",
-        "phone": "13834112106",
+        "phone": "123132113",
         "photo": "派克.jpg",
         "password": "c8837b23ff8aaa8a2dde915473ce0991",
         "roleId": "3"
@@ -468,11 +468,11 @@
         "identityId": "142402199123456321",
         "phone": "132456789",
         "roomId": "1001",
-        "resideDate": "2023/2/13 8:42:57",
-        "leaveDate": "2023/2/21 11:52:21",
-        "deposit": 500,
-        "totalMoney": 7920,
+        "resideDate": "2023/02/13 08:42:57",
+        "leaveDate": "2023/02/21 11:52:21",
+        "deposit": 700,
         "guestNum": 2,
+        "totalMoney": 7920,
         "resideStateId": 1
       },
       {
@@ -486,7 +486,7 @@
         "deposit": 500,
         "totalMoney": 7920,
         "guestNum": 2,
-        "resideStateId": 2
+        "resideStateId": 1
       },
       {
         "id": 3,

@@ -42,7 +42,7 @@ const Login = () => {
         setTimeout(()=>{
             //跳转到首页
             navigate('/layout')
-        },1000)
+        },200)
         
        }
        else{

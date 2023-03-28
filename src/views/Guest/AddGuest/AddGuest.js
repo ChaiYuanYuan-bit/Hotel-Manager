@@ -2,8 +2,10 @@ import React, {Fragment,useState,useEffect} from 'react';
 import {Button,Drawer,Form,Input,Select,DatePicker } from 'antd'
 import 'react-quill/dist/quill.snow.css';
 import {$remainRoomList} from '../../../api/roomApi'
-import { $add } from "../../../api/guestApi";
-import {$stateList} from '../../../api/stateApi'
+import { $add,$getOne,$update } from "../../../api/guestApi";
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+import locale from 'antd/es/date-picker/locale/en_US';
 
 import MyNotification from '../../../components/MyNotification';
 
@@ -13,9 +15,9 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
     let[form] = Form.useForm()
     //通知框状态
     let [noteMsg,setNoteMsg] = useState({type:'',description:''})
-    //可选客房状态
+    //可选房间列表
     let [roomRemainList,setRoomRemainList] = useState([])
-    //所选房型
+    //所选房型Id
     let [roomTypeId,setRoomTypeId] = useState(1)
     
     //关闭右边抽屉并清空表单
@@ -27,19 +29,15 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
     //编辑状态
     useEffect(()=>{
         if(guestId>0){
-            // $getOne(guestId).then(data=>{
-            //     form.setFieldsValue({
-            //         ...data,
-            //         roomTypeName:data.roomType.typeName,
-            //         roomStateId:data.roomState.roomStateId,
-            //     })
-            // })
-            // loadRoomState()
+            $getOne(guestId).then(response=>{
+                form.setFieldsValue({
+                    ...response.data,
+                    resideDate:dayjs(response.data.resideDate),
+                    leaveDate:dayjs(response.data.leaveDate)
+                })
+            })
         }
-        else{
-            loadRemainRoom()
-        }
-    },[guestId,roomTypeId])
+    },[guestId])
 
     //加载可选客房
     const loadRemainRoom = async()=>{
@@ -59,41 +57,38 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
         }
     }
 
-    // //加载客房状态下拉框
-    // const loadRoomState = async ()=>{
-    //     try{
-    //         let data = await $stateList()
-    //         data = data.map(r=>({value:r.roomStateId,label:r.roomStateName}))
-    //         setRoomStateList(data)
-    //     }
-    //     catch(error){
-    //         console.log('error', error)
-    //         setNoteMsg({type:'error',description:'网络错误'})
-    //     }
-    // }
-
-
     //表单提交的方法
     const onFinish = async (values) => {
         try{
             if(guestId>0)
             {
-                // //修改客房
-                // let {success,message} = await $update(values)
-                // console.log({success,message})
-                // if(success)
-                // {
-                //     setNoteMsg({type:'success',description:message})
-                //     loadRoomList()
-                //     setOpen(false)
-                //     setGuestId(0)   //取消编辑状态
-                //     form.resetFields()
-                // }
-                // else{
-                //     setNoteMsg({type:'error',description:message})
-                //     setGuestId(0)   //取消编辑状态
-                //     setOpen(false)
-                // }
+                console.log('values', values)
+                //修改顾客信息
+                let {success,message} = await $update({
+                    id:guestId,
+                    guestName:values.guestName,
+                    identityId:values.identityId,
+                    phone:values.phone,
+                    roomId:values.roomId,
+                    resideDate:values.resideDate.format("YYYY/MM/DD HH:mm:ss"),
+                    leaveDate:values.leaveDate.format("YYYY/MM/DD HH:mm:ss"),
+                    deposit:values.deposit,
+                    guestNum:values.guestNum,
+                    totalMoney:values.totalMoney
+                })
+                if(success)
+                {
+                    setNoteMsg({type:'success',description:message})
+                    loadGuestList()
+                    setOpen(false)
+                    setGuestId(0)   //取消编辑状态
+                    form.resetFields()
+                }
+                else{
+                    setNoteMsg({type:'error',description:message})
+                    setGuestId(0)   //取消编辑状态
+                    setOpen(false)
+                }
             }
             else{
                 //顾客入住
@@ -118,6 +113,7 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
             }
         }
         catch(error){
+            console.log('error', error)
             setNoteMsg({type:'error',description:'网络错误'})
             setOpen(false)
             clear()
@@ -205,6 +201,7 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
                 >
                     <Select 
                     options={roomTypeList}
+                    onClick={()=>{loadRemainRoom()}}
                     onChange={value=>setRoomTypeId(value)}
                     ></Select>
                 </Form.Item>
@@ -236,12 +233,14 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
                 >
                      <DatePicker
                       showTime 
+                      showNow={true}
+                      format="YYYY/MM/DD HH:mm:ss" 
+                      locale={locale}
                       />
                 </Form.Item>
                 <Form.Item 
                 label="离开日期"
                 name="leaveDate"
-                format="YYYY/MM/DD HH:mm:ss" 
                 rules = {[
                     {
                         required: true,
@@ -251,7 +250,9 @@ const AddGuest = ({open,setOpen,loadGuestList,roomTypeList,guestId,setGuestId}) 
                 >
                     <DatePicker 
                     showTime 
+                    showNow={true}
                     format="YYYY/MM/DD HH:mm:ss" 
+                    locale={locale}
                    />
                 </Form.Item>
                 <Form.Item 

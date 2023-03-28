@@ -6,8 +6,8 @@ export const $guestList = async (params)=>{
     return data
 }
 //获取单个顾客
-export const $getOne = async (loginId)=>{
-    let {data} = await axiosInstance.get(`GuestRecord/GetOne`,{params:{loginId}})
+export const $getOne = async (guestId)=>{
+    let {data} = await axiosInstance.get(`GuestRecord/GetOne`,{params:{guestId}})
     return data
 }
 //添加顾客
@@ -25,8 +25,13 @@ export const $stateList = async (params)=>{
     let {data} = await axiosInstance.get(`GuestState/List`,{...params})
     return data
 }
+//结账
+export const $checkout = async (params)=>{
+    let {data} = await axiosInstance.post(`GuestRecord/CheckOut`,params)
+    return data
+}
 //删除顾客
-export const $del = async (params)=>{
-    let {data} = await axiosInstance.delete(`GuestRecord/Delete`,{params})
+export const $del = async (guestId)=>{
+    let {data} = await axiosInstance.delete(`GuestRecord/Delete`,{params:{guestId}})
     return data
 }

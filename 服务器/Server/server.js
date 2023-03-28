@@ -405,6 +405,8 @@ app.delete("/RoomType/Delete", function (req, res) {
   
 });
 
+//每个房型的营业额
+
 /**********************************Room*****************************************/
 //查询客房列表 
 app.get("/Room/List", function (req, res) {
@@ -589,24 +591,16 @@ app.delete("/Room/Delete", function (req, res) {
 
 //查询可用客房列表
 app.get("/Room/Remain",function (req, res){
+  console.log('get /Room/Remain:')
   const {roomTypeId} = req.query
   axios.get('http://localhost:3004/room').then((response1)=>{
     const all_rooms = response1.data.data
     const want_rooms = all_rooms.filter(r=>r.roomTypeId===roomTypeId*1)
     axios.get('http://localhost:3004/guest').then(response2=>{
       const all_guests = response2.data.data
-      const remain_rooms = want_rooms.filter(r=>{
-        const room = all_guests.find(g=>{
-          return r.roomId===g.roomId
-        })
-        if(room)
-        {
-          return false
-        }
-        else{
-          return true
-        }
-      })
+      const remain_rooms = want_rooms.filter(r=>
+        r.roomState.roomStateId===1
+        )
       res.json(remain_rooms)
     })
   })
@@ -643,7 +637,6 @@ app.get("/State/ListToUpdate", function (req, res) {
 });
 
 /**********************************Guest*****************************************/
-
 
 //查询顾客列表 
 app.get("/GuestRecord/List", function (req, res) {
@@ -771,6 +764,114 @@ app.post("/GuestRecord/Add",function(req,res){
   })
 })
 
+//查询单个顾客
+app.get("/GuestRecord/GetOne", function (req, res) {
+  console.log('get /GuestRecord/GetOne:')
+  const guestId = Number(req.query.guestId)
+  axios.get('http://localhost:3004/guest').then(response => {
+    const guest = response.data.data.find((item)=>{
+      return item.id===guestId
+    })
+    if(guest)
+    {
+      axios.get('http://localhost:3004/room').then(response=>{
+        const rooms = response.data.data
+        const roomTypeId = rooms.find(item=>guest.roomId===item.roomId).roomTypeId
+        res.json({success:true,message:"找到该顾客",data:{...guest,roomTypeId}})
+      })
+      
+    }
+    else{
+      res.json({success:false,message:"找不到该顾客",data:{}})
+    }
+  })
+});
+
+//结账
+app.post("/GuestRecord/CheckOut",function(req,res){
+  const guestId = req.body.guestId
+  axios.get('http://localhost:3004/guest').then(response=>{
+    const guests = response.data
+    const guest_Index = guests.data.findIndex(item=>item.id===guestId)
+    const totalMoney = guests.data[guest_Index].totalMoney
+    guests.data[guest_Index].resideStateId = 1
+    axios.put('http://localhost:3004/guest',{...guests}).then(()=>{
+      res.json({totalMoney})
+    })
+  })
+})
+//修改顾客
+app.put("/GuestRecord/Update",function(req,res){
+  console.log('get /GuestRecord/GetOne:')
+  const new_guest = req.body
+  const guestId = Number(new_guest.id)
+  axios.get('http://localhost:3004/guest').then(response => {
+    const guests = response.data
+    const old_guestIndex =guests.data.findIndex((item)=>{
+      return item.id===guestId
+    })
+    if(old_guestIndex>=0)
+    {
+      //若房间没修改，就不更新room
+      if(guests.data[old_guestIndex].roomId===new_guest.roomId)
+      {
+        guests.data[old_guestIndex] = {...new_guest,resideStateId:guests.data[old_guestIndex].resideStateId}
+        axios.put('http://localhost:3004/guest',{...guests}).then(()=>{
+          res.json({success:true,message:"修改成功"})
+        })
+        
+      }
+      //若房间被修改，则更新room
+      else{
+        axios.get('http://localhost:3004/room').then(response=>{
+          const rooms = response.data
+          const new_roomIndex = rooms.data.findIndex((item)=>item.roomId===new_guest.roomId)
+          rooms.data[new_roomIndex].roomState = {
+            "roomStateId": 2,
+            "roomStateName": "入住"
+          }
+          const old_roomIndex = rooms.data.findIndex((item)=>item.roomId===guests.data[old_guestIndex].roomId)
+          rooms.data[old_roomIndex].roomState = {
+            "roomStateId": 1,
+            "roomStateName": "空闲"
+          }
+          guests.data[old_guestIndex] = {...new_guest,resideStateId:guests.data[old_guestIndex].resideStateId}
+          axios.put('http://localhost:3004/room',{...rooms}).then(()=>{
+            axios.put('http://localhost:3004/guest',{...guests}).then(()=>{
+              res.json({success:true,message:"修改成功"})})
+          })
+        })
+      }    
+    }
+    else{
+      res.json({success:false,message:"找不到该顾客",data:{}})
+    }
+  })
+})
+
+//删除顾客
+app.delete("/GuestRecord/Delete",function(req,res){
+  const guestId = req.query.guestId*1
+  axios.get('http://localhost:3004/guest').then(response=>{
+    const guests = response.data
+    const roomId = guests.data.find(item=>item.id===guestId).roomId
+    guests.data = guests.data.filter(item=>item.id!==guestId)
+    axios.put('http://localhost:3004/guest',{...guests}).then(()=>{
+      axios.get('http://localhost:3004/room').then(response=>{
+        const rooms = response.data
+        const room_Index = rooms.data.findIndex(item=>item.roomId===roomId)
+        rooms.data[room_Index].roomState={
+          "roomStateId": 1,
+          "roomStateName": "空闲"
+        }
+        axios.put('http://localhost:3004/room',{...rooms}).then(()=>{
+          res.json({success:true,message:`删除成功,${roomId}房间已空闲`})
+        })
+      })
+    }).catch(error=>res.json({success:false,message:"删除失败"}))
+  })
+})
+
 /**********************************GuestState*****************************************/
 
 //查询结账状态列表
@@ -785,7 +886,6 @@ app.get("/GuestState/List", function (req, res) {
     }
   })
 });
-
 
 app.listen(5000, "localhost", (err) => {
   if (!err){
