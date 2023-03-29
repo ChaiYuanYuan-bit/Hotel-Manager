@@ -606,6 +606,8 @@ app.get("/Room/Remain",function (req, res){
     })
   })
 })
+
+//查询营业额
 app.get("/Room/TotalPrice",function(req,res){
   axios.get('http://localhost:3004/totalPrice').then(response=>{
     res.json(response.data)

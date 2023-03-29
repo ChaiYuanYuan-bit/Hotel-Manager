@@ -7,7 +7,7 @@ const loginAdmin = createSlice({
     initialState:{
         admin:{}
     },
-    //整合器
+    //操作状态
     reducers:{
         setAdmin:(state,{payload})=>{
             state.admin = payload.admin
