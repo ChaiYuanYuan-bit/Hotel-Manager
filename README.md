@@ -1,6 +1,6 @@
 # **Hotel-Manager**
 ## **1. 项目简介**
-&emsp;&emsp;本项目是一个简单的酒店后台管理系统DEMO，参考了[尚硅谷的React实战视频](https://www.bilibili.com/video/BV1HM41127ts?p=1&vd_source=b663bb0bb5b26e2d0fa24f08657f6478)，实现了账户管理、客房管理、客户管理、个人信息修改等主要功能,并在其基础上添加了房型管理、房间管理和客户管理的信息交互。
+&emsp;&emsp;本项目是一个简单的酒店后台管理系统DEMO，参考了[尚硅谷的React实战视频](https://www.bilibili.com/video/BV1HM41127ts?p=1&vd_source=b663bb0bb5b26e2d0fa24f08657f6478)，实现了账户管理、客房管理、客户管理、个人信息修改等主要功能，并在其基础上添加了房型管理、房间管理和客户管理的信息交互。
 
 ![项目预览](./images/demo.png)
 
