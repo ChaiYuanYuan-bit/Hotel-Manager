@@ -49,7 +49,7 @@ app.get("/Admin/Login", function (req, res) {
     if(!isExist){
       res.json({message:'用户名不存在',success:false})
     }
-  })
+  }).catch(error=>console.log(error.code))
 });
 
 //修改密码
