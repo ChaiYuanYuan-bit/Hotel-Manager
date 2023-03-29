@@ -10,12 +10,15 @@
 
 ## **2. 开发环境配置**
 &emsp;&emsp;运行本项目首先需要已安装[Node.js](https://nodejs.org/en)，编译器推荐使用[VS Code](https://code.visualstudio.com/)。
-#### **3.1 安装依赖项** 
+#### **3.1 安装React依赖项** 
       1. $ git clone git@github.com:ChaiYuanYuan-bit/Hotel-Manager.git
       2. $ cd Hotel-Manager
-      3. $ npm i
+      3. $ npm install
 #### **3.2 安装 [Json-Server](https://github.com/typicode/json-server)**
         $ npm install -g json-server
+#### **3.3 安装server依赖项** 
+        $ cd ./服务器/server
+        $ npm install
 ## **3. 运行项目**
         运行 React
             1. $ cd Hotel-Manager
