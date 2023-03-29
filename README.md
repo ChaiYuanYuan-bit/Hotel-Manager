@@ -27,8 +27,8 @@
             5. $ cd ./服务器/Database
             6. $ json-server --watch db.json --port 3004【为了防止与3000端口冲突，这里将json-server开在了3004端口】
             到这里，项目应该已经可以跑起来了 :）
-        账户名：admin
-        密码：123321
+              账户名：admin
+              密码：123321
 ## **4. 配置Postman【可选】**
 &emsp;&emsp;下载[Postman](https://www.postman.com/)并注册账号，在自己的collection下导入[json文件](./服务器/Postman)
 ![](./images/postman.png)
