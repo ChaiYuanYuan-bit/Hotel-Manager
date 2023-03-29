@@ -17,7 +17,7 @@
 #### **3.2 安装 [Json-Server]()**
         $ npm install -g json-server
 ## **3. 运行项目**
-        运行 React：
+        运行 React
             1. $ cd Hotel-Manager
             2. $ npm run start
         运行 Node.js server
