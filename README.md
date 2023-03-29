@@ -6,7 +6,7 @@
 
  &emsp;前端使用React框架，使用到技术主要为React18+Redux+Router6+Antd+Echarts。后端使用Node.js搭建本地服务器，数据库使用简单好用的本地数据接口 [json-server](https://github.com/typicode/json-server)。
  
-&emsp;【注】:Node.js server目前写的是依托答辩，后续会将MySQL加入到Node.js中。
+&emsp;【注】Node.js server目前写的是依托答辩，后续会将MySQL加入到Node.js中。
 
 ## **2. 开发环境配置**
 &emsp;&emsp;运行本项目首先需要已安装[Node.js](https://nodejs.org/en)，编译器推荐使用[VS Code](https://code.visualstudio.com/)。
