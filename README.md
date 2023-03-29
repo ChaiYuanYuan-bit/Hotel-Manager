@@ -29,6 +29,7 @@
             到这里，项目应该已经可以跑起来了 :）
 ## **4. 配置Postman【可选】**
 &emsp;&emsp;下载[Postman](https://www.postman.com/)并注册账号，在自己的collection下导入[json文件](./服务器/Postman)
+![](./images/postman.png)
 
 ## **5. 文件说明**
 - `src`
