@@ -181,7 +181,12 @@ export default function(){
 
     return (
         <Layout className='ant-layout '>
-            <Sider trigger={null} collapsible  collapsed={collapsed} width={250}>
+            <Sider 
+            trigger={null}
+             collapsible  
+             collapsed={collapsed} 
+             height={'100%'}
+             width={250}>
                 <div className="logo" ><p>{collapsed ? 'Moon' : 'Moon酒店后台管理系统'}</p></div>
                 <Menu
                 theme="dark"
@@ -208,6 +213,7 @@ export default function(){
                 </Header>
                 <Content
                 style={{
+                    overflow:'auto',
                     margin: '24px 16px',
                     padding: 24,
                     minHeight: 280,

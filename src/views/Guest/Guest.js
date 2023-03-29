@@ -293,6 +293,9 @@ const Guest = () => {
             />
 
             <Pagination size='small' 
+            style={{
+                marginTop:'15px'
+            }}
             defaultCurrent={pageIndex} 
             total={count} 
             pageSize={8} 

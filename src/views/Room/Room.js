@@ -226,6 +226,9 @@ const Room = () => {
             />
 
             <Pagination size='small' 
+            style={{
+                marginTop:'10px'
+            }}
             defaultCurrent={pageIndex} 
             total={count} 
             pageSize={8} 
